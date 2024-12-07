@@ -6,6 +6,10 @@ import time
 import math
 import serial
 
+#todolist
+#1.测试串口发送是否有效果
+#2.测试另一电脑端口号
+#3.编译成exe文件
 def calculate_result(x):
     # 检查 x 是否在 230 到 2000 之间
     if x < 230 or x > 2000:
@@ -30,7 +34,7 @@ def calculate_result(x):
 
 
 def send_to_serial(data):
-    with serial.Serial('COM7', 9600, timeout=1) as ser:
+    with serial.Serial('COM6', 19200, timeout=1) as ser:
         ser.write(data.encode('utf-8'))
 
 def set_function(a, b, output_widget):
@@ -48,7 +52,7 @@ def set_function(a, b, output_widget):
     output_widget.insert(tk.END, message)  # 将信息插入到文本框
     output_widget.see(tk.END)  # 滚动到文本框的末尾
 
-    time.sleep(180)
+    time.sleep(10)
     send_to_serial("+Y,66666\r")
     # print("+Y,66666\r")
 
@@ -71,7 +75,7 @@ def set_function(a, b, output_widget):
 
 def check_serial_connection():
     try:
-        with serial.Serial('COM7', 9600, timeout=1) as ser:
+        with serial.Serial('COM6', 19200, timeout=1) as ser:
             return True
     except (serial.SerialException, OSError):
         return False
@@ -84,7 +88,7 @@ class DynamicSetApp:
         # Add a label for instructions
         instructions_label = tk.Label(self.root, text="确保程序开始时反光镜处于校准完成位置，挡光板处于遮光位置", fg="blue")
         instructions_label.pack(pady=10)
-        
+
         self.scrollable_frame = tk.Frame(self.root)
         self.scrollable_frame.pack(fill=tk.BOTH, expand=True)
 
@@ -144,7 +148,7 @@ class DynamicSetApp:
 
     def start_workflow(self):
         if not check_serial_connection():
-            messagebox.showerror("Connection Error", "Unable to connect to COM7. Please check the connection.")
+            messagebox.showerror("Connection Error", "串口连接到笔记本左下侧usb口")
             return
         for widget in self.container.winfo_children():
             if isinstance(widget, tk.Frame):

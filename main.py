@@ -52,7 +52,7 @@ def set_function(a, b, output_widget):
     output_widget.insert(tk.END, message)  # 将信息插入到文本框
     output_widget.see(tk.END)  # 滚动到文本框的末尾
 
-    time.sleep(10)
+    time.sleep(180)
     send_to_serial("+Y,66666\r")
     # print("+Y,66666\r")
 
@@ -64,10 +64,10 @@ def set_function(a, b, output_widget):
 
     send_to_serial("-Y,66666\r")
 
-    time.sleep(5)
+    time.sleep(10)
     send_to_serial(f"-X,{x2set}\r")
     # print("-X,%d\r" % x2set)
-
+    time.sleep(10)
     message = f"周期{a}nm曝光完成\n"
     output_widget.insert(tk.END, message)  # 将信息插入到文本框
     output_widget.see(tk.END)  # 滚动到文本框的末尾
